@@ -11,9 +11,11 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddViewViewModel extends AndroidViewModel {
@@ -40,6 +42,11 @@ public class AddViewViewModel extends AndroidViewModel {
                     public void run() throws Throwable {
                         Log.d("AddViewViewModel", "subscribe");
                         shouldCloseScreen.setValue(true);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.d("AddViewViewModel","Error saveNote");
                     }
                 });
         compositeDisposable.add(disposable);
